@@ -1,0 +1,14 @@
+<package>
+  <description brief="Arbiter component to select/forward motion command.">
+  Arbiter component to select and forward the appropriate motion command when using multiple sources at the same time - e.g. joystick, path following or other. The component accepts joystick message (used for selection), joystick motion command and path following motion command. The selected motion command is forwarded to the locomotion control.
+  Code is based on [https://github.com/hdpr-rover/control-orogen-pancam_panorama] by Karl Kangur.
+  </description>
+  <author>Jan Filip/jan.filip2@gmail.com, jan.filip@esa.int</author>
+  <license>dummy-license</license>
+  <url>https://github.com/exoter-rover</url>
+  <logo>dummy-logo-url</logo>
+  <depend package="base/cmake" />
+  <depend package="base/types" />
+  <depend package="drivers/controldev" />
+  <depend package="drivers/orogen/controldev" />
+</package>
