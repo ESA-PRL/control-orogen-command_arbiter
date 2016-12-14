@@ -63,6 +63,7 @@ void Task::updateHook()
             } else {
                 state(FOLLOWING);
             }
+            newMotionCommand = true;
         }
     }
 
