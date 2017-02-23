@@ -38,8 +38,10 @@ bool Task::startHook()
 {
     if (! TaskBase::startHook())
         return false;
-    return true;
+    
+    // TODO: This does not work! But there are no workarounds, or at least not elegant ones here.
     state(JOYSTICK);
+    return true;
 }
 void Task::updateHook()
 {
