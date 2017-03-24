@@ -45,8 +45,9 @@ void Task::updateHook()
     // Arbiter state transition based on the user input (button pressed)
     if(_raw_command.read(joystick_command) == RTT::NewData)
     {
-        // Button (rising edge) detection
-        if(joystick_command.buttonValue[B]  && !joystick_command_prev.buttonValue[B])
+        // Button (rising edge) detection:
+        if(  joystick_command.buttons[BTN_B]  &&    // Button is pressed down now
+            !joystick_command_prev.buttonValue[BTN_B])  // and was not pressed previously 
         {
             // Toggle between joystick and motion command input types
             input_method = input_method == JOYSTICK ? FOLLOWING : JOYSTICK;
