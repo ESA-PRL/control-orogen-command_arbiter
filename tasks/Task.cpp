@@ -50,6 +50,14 @@ void Task::updateHook()
         {
             // Toggle between joystick and motion command input types
             input_method = input_method == JOYSTICK ? FOLLOWING : JOYSTICK;
+
+            // When the input type is changed, but no commands are provided from the
+            // new input the old command will continue to be applied, so a stop signal
+            // must be safe in order to guarantee no unexpected behaviour
+            base::commands::Motion2D stop_command;
+            stop_command.translation = 0.0;
+            stop_command.rotation = 0.0;
+            _motion_command.write(stop_command);
         }
         joystick_command_prev = joystick_command;
     }
