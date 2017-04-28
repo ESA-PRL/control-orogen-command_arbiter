@@ -46,8 +46,8 @@ void Task::updateHook()
     if(_raw_command.read(joystick_command) == RTT::NewData)
     {
         // Button (rising edge) detection:
-        if(  joystick_command.buttons["BTN_B"]  &&    // Button is pressed down now
-            !joystick_command_prev.buttons["BTN_B"])  // and was not pressed previously 
+        if(  joystick_command.buttons["BTN_C"]  &&    // Button is pressed down now // FIXME: Because of wrong button mapping in the system driver BTN_B is actually BTN_C
+            !joystick_command_prev.buttons["BTN_C"])  // and was not pressed previously 
         {
             // Toggle between joystick and motion command input types
             input_method = input_method == JOYSTICK ? FOLLOWING : JOYSTICK;
