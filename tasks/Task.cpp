@@ -63,12 +63,14 @@ void Task::updateHook()
     }
 
     // Read input motion commands
-    if(_joystick_motion_command.readNewest(joystick_motion_command) == RTT::NewData && input_method == JOYSTICK)
+//    if(_joystick_motion_command.readNewest(joystick_motion_command) == RTT::NewData && input_method == JOYSTICK)
+    if(_joystick_motion_command.read(joystick_motion_command) == RTT::NewData && input_method == JOYSTICK)
     {
         _motion_command.write(joystick_motion_command);
     }
 
-    if(_follower_motion_command.readNewest(follower_motion_command) == RTT::NewData && input_method == FOLLOWING)
+//    if(_follower_motion_command.readNewest(follower_motion_command) == RTT::NewData && input_method == FOLLOWING)
+    if(_follower_motion_command.read(follower_motion_command) == RTT::NewData && input_method == FOLLOWING)
     {
         _motion_command.write(follower_motion_command);
     }
