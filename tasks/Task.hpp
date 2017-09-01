@@ -34,6 +34,11 @@ namespace command_arbiter
         base::commands::Motion2D follower_motion_command;
 
         int input_method;
+        int locomotion_mode;
+        int num_locomotion_modes;
+
+        //std::vector<uint8_t> joystick_buttons;
+        //std::vector<uint8_t> joystick_buttons_prev;
 
     public:
         Task(std::string const& name = "command_arbiter::Task");
