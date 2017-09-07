@@ -3,6 +3,7 @@ templates/*
 *~
 .*.swp
 build/*
+logs/
 
 
 # Compiled Object files
