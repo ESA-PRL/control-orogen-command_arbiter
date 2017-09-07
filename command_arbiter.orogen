@@ -1,6 +1,7 @@
 name "command_arbiter"
 
 import_types_from "command_arbiterTypes.hpp"
+import_types_from "locomotion_switcher/locomotion_switcherTypes.hpp"
 import_types_from "controldev/ControlDevTypes.hpp"
 import_types_from "base"
 
@@ -14,7 +15,7 @@ task_context "Task" do
 
     # Output ports
     output_port("motion_command", "base/commands/Motion2D").doc("Selected motion command, to be forwarded to locomotion control.")
-    output_port("locomotion_mode", "int").doc("Locomotion mode, to be forwarded to locomotion switcher and to override autonomous l.m. switching.")
+    output_port("locomotion_mode", "locomotion_switcher/LocomotionMode").doc("Locomotion mode, to be forwarded to locomotion switcher and to override autonomous l.m. switching.")
 
     # Runtime states
     runtime_states :JOYSTICK, :FOLLOWING

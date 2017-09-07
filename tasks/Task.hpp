@@ -34,7 +34,7 @@ namespace command_arbiter
         base::commands::Motion2D follower_motion_command;
 
         int input_method;
-        int locomotion_mode;
+        locomotion_switcher::LocomotionMode locomotion_mode;
         int num_locomotion_modes;
 
         //std::vector<uint8_t> joystick_buttons;
