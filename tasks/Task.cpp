@@ -1,7 +1,7 @@
 #include "Task.hpp"
 
 using namespace command_arbiter;
-namespace LM = locomotion_switcher;
+using namespace locomotion_switcher;
 
 Task::Task(std::string const& name)
     : TaskBase(name)
@@ -26,7 +26,7 @@ bool Task::configureHook()
         return false;
     }
 
-    locomotion_mode = LM::LocomotionMode::DRIVING;
+    locomotion_mode = LocomotionMode::DRIVING;
 
     input_method = JOYSTICK;
 
@@ -62,10 +62,10 @@ void Task::updateHook()
             !joystick_command_prev.buttons[1])  // and was not pressed previously
         {
             // Toggle between joystick and motion command input types
-            if (locomotion_mode == LM::LocomotionMode::DRIVING)
-                locomotion_mode = LM::LocomotionMode::WHEEL_WALKING;
-            else if (locomotion_mode == LM::LocomotionMode::WHEEL_WALKING)
-                locomotion_mode = LM::LocomotionMode::DRIVING;
+            if (locomotion_mode == LocomotionMode::DRIVING)
+                locomotion_mode = LocomotionMode::WHEEL_WALKING;
+            else if (locomotion_mode == LocomotionMode::WHEEL_WALKING)
+                locomotion_mode = LocomotionMode::DRIVING;
             _locomotion_mode.write(locomotion_mode);
         }
         joystick_command_prev = joystick_command;
@@ -93,14 +93,14 @@ void Task::updateHook()
         stop_command.translation = 0.0;
         stop_command.rotation = 0.0;
         _motion_command.write(stop_command);
-        locomotion_mode = LM::LocomotionMode::DRIVING;
+        locomotion_mode = LocomotionMode::DRIVING;
         _locomotion_mode.write(locomotion_mode);
     }
     else if(input_method == FOLLOWING && state() != FOLLOWING)
     {
         state(FOLLOWING);
         _motion_command.write(follower_motion_command);
-        _locomotion_mode.write(LM::LocomotionMode::DONT_CARE);
+        _locomotion_mode.write(LocomotionMode::DONT_CARE);
     }
 }
 
