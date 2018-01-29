@@ -1,6 +1,7 @@
 name "command_arbiter"
 
 import_types_from "command_arbiterTypes.hpp"
+import_types_from "locomotion_switcher/locomotion_switcherTypes.hpp"
 import_types_from "controldev/ControlDevTypes.hpp"
 import_types_from "base"
 
@@ -9,11 +10,12 @@ task_context "Task" do
 
     # Input ports
     input_port("raw_command", "/controldev/RawCommand").doc("Input from joystick to toggle the panorama mode")
-    input_port("joystick_motion_command", "base/MotionCommand2D").doc("Input motion command from joystick - user input.")
-    input_port("follower_motion_command", "base/MotionCommand2D").doc("Input motion command from path following component (e.g. Waypoint Navigation).")
+    input_port("joystick_motion_command", "base/commands/Motion2D").doc("Input motion command from joystick - user input.")
+    input_port("follower_motion_command", "base/commands/Motion2D").doc("Input motion command from path following component (e.g. Waypoint Navigation).")
 
     # Output ports
-    output_port("motion_command", "base/MotionCommand2D").doc("Selected motion command, to be forwarded to locomotion control.")
+    output_port("motion_command", "base/commands/Motion2D").doc("Selected motion command, to be forwarded to locomotion control.")
+    output_port("locomotion_mode", "locomotion_switcher/LocomotionMode").doc("Locomotion mode, to be forwarded to locomotion switcher and to override autonomous l.m. switching.")
 
     # Runtime states
     runtime_states :JOYSTICK, :FOLLOWING
