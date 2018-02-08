@@ -44,6 +44,23 @@ void Task::updateHook()
 {
     TaskBase::updateHook();
 
+    // stop in case a hazard is detected
+    bool hazard_detected = false;
+    if(_hazard_detected.read(hazard_detected) == RTT::NewData)
+    {
+        if(hazard_detected == true)
+        {
+            sendStopCommand();
+            state(EMERGENCY);
+        }
+    }
+
+    // trap in emergency state
+    if (state() == EMERGENCY)
+    {
+        return;
+    }
+
     // Arbiter state transition based on the user input (button pressed)
     if(_raw_command.read(joystick_command) == RTT::NewData)
     {
@@ -89,12 +106,7 @@ void Task::updateHook()
         // When the input type is changed, but no commands are provided from the
         // new input the old command will continue to be applied, so a stop signal
         // must be safe in order to guarantee no unexpected behaviour
-        base::commands::Motion2D stop_command;
-        stop_command.translation = 0.0;
-        stop_command.rotation = 0.0;
-        _motion_command.write(stop_command);
-        locomotion_mode = LocomotionMode::DRIVING;
-        _locomotion_mode.write(locomotion_mode);
+        sendStopCommand();
     }
     else if(input_method == FOLLOWING && state() != FOLLOWING)
     {
@@ -102,6 +114,16 @@ void Task::updateHook()
         _motion_command.write(follower_motion_command);
         _locomotion_mode.write(LocomotionMode::DONT_CARE);
     }
+}
+
+void Task::sendStopCommand()
+{
+    base::commands::Motion2D stop_command;
+    stop_command.translation = 0.0;
+    stop_command.rotation = 0.0;
+    _motion_command.write(stop_command);
+    locomotion_mode = LocomotionMode::DRIVING;
+    _locomotion_mode.write(locomotion_mode);
 }
 
 void Task::errorHook()

@@ -37,6 +37,8 @@ namespace command_arbiter
         locomotion_switcher::LocomotionMode locomotion_mode;
         int num_locomotion_modes;
 
+        void sendStopCommand();
+
         //std::vector<uint8_t> joystick_buttons;
         //std::vector<uint8_t> joystick_buttons_prev;
 
