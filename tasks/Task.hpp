@@ -42,6 +42,9 @@ namespace command_arbiter
         //std::vector<uint8_t> joystick_buttons;
         //std::vector<uint8_t> joystick_buttons_prev;
 
+        // remember state for recovery from emergency state (hazard detection)
+        TaskBase::States last_state;
+
     public:
         Task(std::string const& name = "command_arbiter::Task");
         Task(std::string const& name, RTT::ExecutionEngine* engine);

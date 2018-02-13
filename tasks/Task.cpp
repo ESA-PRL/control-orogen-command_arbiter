@@ -29,6 +29,7 @@ bool Task::configureHook()
     locomotion_mode = LocomotionMode::DRIVING;
 
     input_method = JOYSTICK;
+    last_state = JOYSTICK;
 
     return true;
 }
@@ -48,10 +49,15 @@ void Task::updateHook()
     bool hazard_detected = false;
     if(_hazard_detected.read(hazard_detected) == RTT::NewData)
     {
-        if(hazard_detected == true)
+        if (hazard_detected && (state() != EMERGENCY))
         {
+            last_state = state();
             sendStopCommand();
             state(EMERGENCY);
+        }
+        else if (!hazard_detected && (state() == EMERGENCY))
+        {
+            state(last_state);
         }
     }
 
