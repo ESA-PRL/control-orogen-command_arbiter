@@ -19,7 +19,7 @@ task_context "Task" do
     output_port("locomotion_mode", "locomotion_switcher/LocomotionMode").doc("Locomotion mode, to be forwarded to locomotion switcher and to override autonomous l.m. switching.")
 
     # Runtime states
-    runtime_states :JOYSTICK, :FOLLOWING, :EMERGENCY
+    runtime_states :FOLLOWING, :JOYSTICK, :EMERGENCY
 
     port_driven
 end

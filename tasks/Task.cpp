@@ -28,8 +28,8 @@ bool Task::configureHook()
 
     locomotion_mode = LocomotionMode::DRIVING;
 
-    input_method = JOYSTICK;
-    last_state = JOYSTICK;
+    input_method = FOLLOWING;
+    last_state = FOLLOWING;
 
     return true;
 }
@@ -79,17 +79,19 @@ void Task::updateHook()
             // Toggle between joystick and motion command input types
             input_method = input_method == JOYSTICK ? FOLLOWING : JOYSTICK;
         }
-
-        // Button A (rising edge) detection:
-        if(  joystick_command.buttons[1]  &&    // Button is pressed down now // FIXME: Because of wrong button mapping in the system driver BTN_B is actually BTN_C
-            !joystick_command_prev.buttons[1])  // and was not pressed previously
+        //if (input_method == JOYSTICK)  // uncomment if mode should not be selected by joystick in Following mode
         {
-            // Toggle between joystick and motion command input types
-            if (locomotion_mode == LocomotionMode::DRIVING)
-                locomotion_mode = LocomotionMode::WHEEL_WALKING;
-            else if (locomotion_mode == LocomotionMode::WHEEL_WALKING)
-                locomotion_mode = LocomotionMode::DRIVING;
-            _locomotion_mode.write(locomotion_mode);
+            // Button A (rising edge) detection:
+            if(  joystick_command.buttons[3]  &&    // Button is pressed down now // FIXME: Because of wrong button mapping in the system driver BTN_B is actually BTN_C
+                !joystick_command_prev.buttons[3])  // and was not pressed previously
+            {
+                // Toggle between joystick and motion command input types
+                if (locomotion_mode == LocomotionMode::DRIVING)
+                    locomotion_mode = LocomotionMode::WHEEL_WALKING;
+                else if (locomotion_mode == LocomotionMode::WHEEL_WALKING)
+                    locomotion_mode = LocomotionMode::DRIVING;
+                _locomotion_mode.write(locomotion_mode);
+            }
         }
         joystick_command_prev = joystick_command;
     }
