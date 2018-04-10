@@ -12,7 +12,7 @@ task_context "Task" do
     input_port("raw_command", "/controldev/RawCommand").doc("Input from joystick to toggle the panorama mode")
     input_port("joystick_motion_command", "base/commands/Motion2D").doc("Input motion command from joystick - user input.")
     input_port("follower_motion_command", "base/commands/Motion2D").doc("Input motion command from path following component (e.g. Waypoint Navigation).")
-    input_port("hazard_detected", "bool").doc("Input port from hazard detector to stop in case of hazards")
+    input_port("fault_detected", "bool").doc("Connect this to FDIR")
 
     # Output ports
     output_port("motion_command", "base/commands/Motion2D").doc("Selected motion command, to be forwarded to locomotion control.")

@@ -45,17 +45,17 @@ void Task::updateHook()
 {
     TaskBase::updateHook();
 
-    // stop in case a hazard is detected
-    bool hazard_detected = false;
-    if(_hazard_detected.read(hazard_detected) == RTT::NewData)
+    // stop in case a fault is detected
+    bool fault_detected = false;
+    if(_fault_detected.read(fault_detected) == RTT::NewData)
     {
-        if (hazard_detected && (state() != EMERGENCY))
+        if (fault_detected && (state() != EMERGENCY))
         {
             last_state = state();
             sendStopCommand();
             state(EMERGENCY);
         }
-        else if (!hazard_detected && (state() == EMERGENCY))
+        else if (!fault_detected && (state() == EMERGENCY))
         {
             state(last_state);
         }
