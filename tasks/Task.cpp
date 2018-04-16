@@ -49,7 +49,7 @@ void Task::updateHook()
     bool fault_detected = false;
     if(_fault_detected.read(fault_detected) == RTT::NewData)
     {
-        if (fault_detected && (state() != EMERGENCY))
+        if (fault_detected && (state() != EMERGENCY) && state() != JOYSTICK)
         {
             last_state = state();
             sendStopCommand();
@@ -59,12 +59,6 @@ void Task::updateHook()
         {
             state(last_state);
         }
-    }
-
-    // trap in emergency state
-    if (state() == EMERGENCY)
-    {
-        return;
     }
 
     // Arbiter state transition based on the user input (button pressed)
@@ -94,6 +88,13 @@ void Task::updateHook()
             }
         }
         joystick_command_prev = joystick_command;
+    }
+
+    // trap in emergency state
+    if (state() == EMERGENCY)
+    {
+        if (input_method == FOLLOWING)
+            return;
     }
 
     // Read input motion commands
