@@ -90,13 +90,6 @@ void Task::updateHook()
         joystick_command_prev = joystick_command;
     }
 
-    // trap in emergency state
-    if (state() == EMERGENCY)
-    {
-        if (input_method == FOLLOWING)
-            return;
-    }
-
     // Read input motion commands
     if(_joystick_motion_command.read(joystick_motion_command) == RTT::NewData && input_method == JOYSTICK)
     {
@@ -105,11 +98,15 @@ void Task::updateHook()
 
     if(_follower_motion_command.read(follower_motion_command) == RTT::NewData && input_method == FOLLOWING)
     {
+        // only allow point turns in emergency mode for waypoint following
+        if (state() == EMERGENCY && follower_motion_command.translation > 0)
+            return;
+
         _motion_command.write(follower_motion_command);
     }
 
     // Propagate the preference to the component state, must do it here as the state cannot be initialised in configureHook
-    if(input_method == JOYSTICK && state() != JOYSTICK)
+    if(input_method == JOYSTICK && state() == FOLLOWING)
     {
         state(JOYSTICK);
         // When the input type is changed, but no commands are provided from the
@@ -117,7 +114,7 @@ void Task::updateHook()
         // must be safe in order to guarantee no unexpected behaviour
         sendStopCommand();
     }
-    else if(input_method == FOLLOWING && state() != FOLLOWING)
+    else if(input_method == FOLLOWING && state() == JOYSTICK)
     {
         state(FOLLOWING);
         _motion_command.write(follower_motion_command);
