@@ -98,8 +98,7 @@ void Task::updateHook()
 
     if(_follower_motion_command.read(follower_motion_command) == RTT::NewData && input_method == FOLLOWING)
     {
-        // only allow point turns in emergency mode for waypoint following
-        if (state() == EMERGENCY && follower_motion_command.translation > 0)
+        if (state() == EMERGENCY)
             return;
 
         _motion_command.write(follower_motion_command);
