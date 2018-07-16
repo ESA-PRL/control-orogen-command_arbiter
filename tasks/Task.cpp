@@ -45,6 +45,11 @@ void Task::updateHook()
 {
     TaskBase::updateHook();
 
+    if (state() == RUNNING)
+    {
+        state(last_state);
+    }
+
     // stop in case a fault is detected
     bool fault_detected = false;
     if(_fault_detected.read(fault_detected) == RTT::NewData)
