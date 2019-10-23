@@ -17,6 +17,7 @@ task_context "Task" do
     # Output ports
     output_port("motion_command", "base/commands/Motion2D").doc("Selected motion command, to be forwarded to locomotion control.")
     output_port("locomotion_mode", "locomotion_switcher/LocomotionMode").doc("Locomotion mode, to be forwarded to locomotion switcher and to override autonomous l.m. switching.")
+    output_port("joystick_state", "int").doc("Current state (following, joystick, emergency).")
 
     # Runtime states
     runtime_states :FOLLOWING, :JOYSTICK, :EMERGENCY

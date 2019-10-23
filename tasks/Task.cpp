@@ -45,6 +45,8 @@ void Task::updateHook()
 {
     TaskBase::updateHook();
 
+    _joystick_state.write(state());
+
     if (state() == RUNNING)
     {
         state(last_state);
